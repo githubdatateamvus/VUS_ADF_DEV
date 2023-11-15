@@ -7,7 +7,7 @@
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -90,32 +90,6 @@
 						}
 					]
 				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE SYNAPSE STATE",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Get Azure Synapse State",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Get Azure Synapse State').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
 			}
 		],
 		"parameters": {
@@ -125,7 +99,7 @@
 			},
 			"resourceGroups": {
 				"type": "string",
-				"defaultValue": "DWCLOUD-Prod"
+				"defaultValue": "DWCLOUD-DEV"
 			},
 			"servers": {
 				"type": "string",
@@ -133,16 +107,14 @@
 			},
 			"databases": {
 				"type": "string",
-				"defaultValue": "VUSDWHPRO"
+				"defaultValue": "VUSDWHDEV"
 			}
 		},
 		"folder": {
 			"name": "AZURE SYNAPSE"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-03-25T10:00:24Z",
-		"lastUpdateUtc": "2022-09-20T14:20:56Z",
-		"createTimeUtc": "2021-11-18T14:25:48Z"
+		"lastPublishTime": "2022-08-04T08:25:40Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

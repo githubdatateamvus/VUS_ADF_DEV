@@ -1,0 +1,25 @@
+{
+	"name": "Live_Source1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SERVER14",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TABLE_NAME": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "DBO",
+			"table": {
+				"value": "@dataset().TABLE_NAME",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

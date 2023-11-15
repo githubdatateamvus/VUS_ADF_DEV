@@ -62,39 +62,13 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "SEND ERROR MESSAGE LOAD TARGET",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Load Target",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Load Target').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
 			}
 		],
 		"folder": {
 			"name": "VUS EXCEL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-08-26T08:25:54Z"
+		"lastPublishTime": "2022-08-04T08:07:29Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

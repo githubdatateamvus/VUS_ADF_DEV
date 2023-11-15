@@ -1,0 +1,460 @@
+{
+	"name": "Load API_ILE",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data API ILE",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:100000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE [STG].[W_STUDENT_SCORE_ILE]",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['assignment_writing1']"
+								},
+								"sink": {
+									"name": "assignment_writing1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['assignment_writing2']"
+								},
+								"sink": {
+									"name": "assignment_writing2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['assignment_writing3']"
+								},
+								"sink": {
+									"name": "assignment_writing3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['assignment_speaking1']"
+								},
+								"sink": {
+									"name": "assignment_speaking1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['assignment_speaking2']"
+								},
+								"sink": {
+									"name": "assignment_speaking2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['assignment_speaking3']"
+								},
+								"sink": {
+									"name": "assignment_speaking3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test1_absent']"
+								},
+								"sink": {
+									"name": "mini_test1_absent",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test1_listening']"
+								},
+								"sink": {
+									"name": "mini_test1_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test1_reading']"
+								},
+								"sink": {
+									"name": "mini_test1_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test2_absent']"
+								},
+								"sink": {
+									"name": "mini_test2_absent",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test2_listening']"
+								},
+								"sink": {
+									"name": "mini_test2_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test2_reading']"
+								},
+								"sink": {
+									"name": "mini_test2_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test3_absent']"
+								},
+								"sink": {
+									"name": "mini_test3_absent",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test3_listening']"
+								},
+								"sink": {
+									"name": "mini_test3_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mini_test3_reading']"
+								},
+								"sink": {
+									"name": "mini_test3_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_listening_raw_40']"
+								},
+								"sink": {
+									"name": "mock_test_listening_raw_40",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_listening']"
+								},
+								"sink": {
+									"name": "mock_test_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_reading_raw_40']"
+								},
+								"sink": {
+									"name": "mock_test_reading_raw_40",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_reading']"
+								},
+								"sink": {
+									"name": "mock_test_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_writing_task_1']"
+								},
+								"sink": {
+									"name": "mock_test_writing_task_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_writing_task_2']"
+								},
+								"sink": {
+									"name": "mock_test_writing_task_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_writing']"
+								},
+								"sink": {
+									"name": "mock_test_writing",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_speaking']"
+								},
+								"sink": {
+									"name": "mock_test_speaking",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_overall']"
+								},
+								"sink": {
+									"name": "mock_test_overall",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['practice']"
+								},
+								"sink": {
+									"name": "practice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['avg_writing']"
+								},
+								"sink": {
+									"name": "avg_writing",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['avg_speaking']"
+								},
+								"sink": {
+									"name": "avg_speaking",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['avg_mini_test']"
+								},
+								"sink": {
+									"name": "avg_mini_test",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_result']"
+								},
+								"sink": {
+									"name": "final_result",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['makeup_written']"
+								},
+								"sink": {
+									"name": "makeup_written",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['makeup_spoken']"
+								},
+								"sink": {
+									"name": "makeup_spoken",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['makeup_overall']"
+								},
+								"sink": {
+									"name": "makeup_overall",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mock_test_is_absent']"
+								},
+								"sink": {
+									"name": "mock_test_is_absent",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_ILE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_ILE"
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"Count": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "VUS API"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-11-10T03:39:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

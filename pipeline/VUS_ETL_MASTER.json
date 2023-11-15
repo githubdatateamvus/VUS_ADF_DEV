@@ -72,7 +72,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "LOAD DB ASA MKT TARGET",
+						"activity": "SIL GENERAL",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -88,7 +88,7 @@
 				}
 			},
 			{
-				"name": "SEND ERROR MESAGE SDE",
+				"name": "Notification Error",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -101,157 +101,27 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
+						"referenceName": "Send Notification",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
 					"parameters": {
+						"DataFactoryName": {
+							"value": "@pipeline().DataFactory",
+							"type": "Expression"
+						},
+						"EmailTo": "nhely@vus-etsc.edu.vn;locpham@vus-etsc.edu.vn",
 						"ErrorMessage": {
 							"value": "@activity('SDE').Error.message",
 							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE SIL",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "SIL",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('SIL').Error.message",
+						},
+						"PipelineName": {
+							"value": "@pipeline().Pipeline",
 							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE SIL GENERAL",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "SIL GENERAL",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('SIL GENERAL').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE PLP",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_PLP').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND SUCCESS EMAIL",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND SUCCESS EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "LOAD DB ASA MKT TARGET",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "SIL GENERAL",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "LOAD ASA TARGET MANUAL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE LOAD TARGET ASA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "LOAD DB ASA MKT TARGET",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('LOAD DB ASA MKT TARGET').Error.message",
+						},
+						"Status": "Success",
+						"SuccessMessage": {
+							"value": "@pipeline().Pipeline",
 							"type": "Expression"
 						}
 					}
@@ -268,7 +138,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-11-01T14:29:55Z"
+		"lastPublishTime": "2022-08-25T07:13:05Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

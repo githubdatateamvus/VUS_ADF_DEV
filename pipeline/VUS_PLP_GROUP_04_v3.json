@@ -1,0 +1,387 @@
+{
+	"name": "VUS_PLP_GROUP_04_v3",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_SRC_List",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "select \n    [JOB_SCRIPT] as Source_Script,\n    --CAST(format(eomonth(GETDATE(),-4),'yyyyMMdd') as NVARCHAR(10)) as Parameter_FromDate,\n    [SOURCE_SCHEMA] AS SRC_Schema,\n    [SOURCE_TABLE] AS SRC_Table, \n    [TARGET_SCHEMA] AS TGT_Schema, \n    [TARGET_TABLE] AS TGT_Table \nFROM [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' AND JOB_GROUP ='LS' AND JOB_SUB_GROUP ='LS_01'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_JOB"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_SRC_List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_SRC_List').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Set TGT Table",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "TGT_Table",
+								"value": {
+									"value": "@{Item().TGT_Table}",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Get JOB_ID",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Set TGT Table",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlDWSource",
+									"sqlReaderQuery": {
+										"value": "@concat('select JOB_ID from [ADF].[ETL_JOB] where TARGET_TABLE=''',variables('TGT_Table'),'''')",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "DS_DWH_SYNAPSE_ADF2",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "AAA"
+									}
+								}
+							}
+						},
+						{
+							"name": "Set Source Script",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set ParameterSP",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Source_Script",
+								"value": {
+									"value": "@{Item().Source_Script}",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Insert Log Before Load Data",
+							"type": "SqlServerStoredProcedure",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [
+								{
+									"activity": "Set Source Script",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Get JOB_ID",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Set SRC Table",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[ADF].[proc_etl_log_message]",
+								"storedProcedureParameters": {
+									"p_batch_id": {
+										"value": {
+											"value": "@pipeline().parameters.BATCH_ID",
+											"type": "Expression"
+										},
+										"type": "Int64"
+									},
+									"p_error_code": {
+										"value": "",
+										"type": "String"
+									},
+									"p_error_message": {
+										"value": "",
+										"type": "String"
+									},
+									"p_job_id": {
+										"value": {
+											"value": "@activity('Get JOB_ID').output.firstRow.JOB_ID",
+											"type": "Expression"
+										},
+										"type": "Int64"
+									},
+									"p_log_message": {
+										"value": {
+											"value": "@concat('Start load table ',variables('TGT_Table'))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"p_log_status": {
+										"value": "",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "LS_DWH_SYNAPSE_DEV",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Copy data",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Insert Log Before Load Data",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlDWSource",
+									"sqlReaderQuery": {
+										"value": "@variables('Source_Script')",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "SqlServerSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_DWH_SYNAPSE",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": "@variables('SRC_Table')"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Live_Source",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLE_NAME": "@variables('TGT_Table')"
+									}
+								}
+							]
+						},
+						{
+							"name": "Set SRC Table",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "SRC_Table",
+								"value": {
+									"value": "@{Item().SRC_Table}",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "SP_Delete_OldData_3Month",
+							"type": "SqlServerStoredProcedure",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [
+								{
+									"activity": "Copy data",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "dbo.proc_DWHADF_Delete_OldData_3Month",
+								"storedProcedureParameters": {
+									"Table": {
+										"value": {
+											"value": "@variables('TGT_Table')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "LS_SERVER14",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Set ParameterSP",
+							"type": "SetVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Parameter_FromDate",
+								"value": {
+									"value": "@{Item().Prameter_FromDate}",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"BATCH_ID": {
+				"type": "string",
+				"defaultValue": "19000101"
+			}
+		},
+		"variables": {
+			"SOURCE": {
+				"type": "String"
+			},
+			"Source_Script": {
+				"type": "String"
+			},
+			"SRC_Schema": {
+				"type": "String"
+			},
+			"SRC_Table": {
+				"type": "String"
+			},
+			"TGT_Schema": {
+				"type": "String"
+			},
+			"TGT_Table": {
+				"type": "String"
+			},
+			"Parameter_FromDate": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "VUS_ETL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-09-10T11:55:04Z",
+		"lastUpdateUtc": "2023-02-17T15:11:05Z",
+		"createTimeUtc": "2023-02-10T04:19:16Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

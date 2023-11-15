@@ -7,7 +7,7 @@
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -24,7 +24,7 @@
 						"Content-Type": "application/json; charset=UTF-8"
 					},
 					"body": {
-						"value": "{\n\tlocation: \"Southeast Asia\",\n    \"sku\": {\n    \"name\": \"DW400c\"\n            }\n}",
+						"value": "{\n\tlocation: \"Southeast Asia\",\n    \"sku\": {\n    \"name\": \"DW200c\"\n            }\n}",
 						"type": "Expression"
 					},
 					"authentication": {
@@ -32,38 +32,12 @@
 						"resource": "https://management.core.windows.net/"
 					}
 				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE SCALE UP DB",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "SCALE DB",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('SCALE DB').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
 			}
 		],
 		"parameters": {
 			"databases": {
 				"type": "string",
-				"defaultValue": "VUSDWHPRO"
+				"defaultValue": "VUSDWHDEV"
 			},
 			"Subscriptions": {
 				"type": "string",
@@ -71,20 +45,18 @@
 			},
 			"ResourceGroups": {
 				"type": "string",
-				"defaultValue": "DWCLOUD-Prod"
+				"defaultValue": "DWCLOUD-DEV"
 			},
 			"Servers": {
 				"type": "string",
-				"defaultValue": "vus-synapseprod-ws"
+				"defaultValue": "vus-synapse-ws"
 			}
 		},
 		"folder": {
 			"name": "AZURE SYNAPSE"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-11-04T06:18:13Z",
-		"lastUpdateUtc": "2022-09-20T14:20:56Z",
-		"createTimeUtc": "2022-07-31T03:59:27Z"
+		"lastPublishTime": "2022-08-04T08:07:26Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -7,8 +7,8 @@
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "12:00:00",
-					"retry": 3,
+					"timeout": "7.00:00:00",
+					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlDWSource",
-						"sqlReaderQuery": "select case when FULL_LOAD_FLG ='N' then JOB_SCRIPT +' and '+INCREMENTAL_COL +'>= dateadd(day,-'+convert(varchar(5),PRUNE_DAYS)+',getdate())' else JOB_SCRIPT end as SRC_LIST, [SOURCE_SCHEMA] as SRC_SCHEMA,[SOURCE_TABLE] as SRC_TBL,  [TARGET_TABLE] as TGT_TBL \nfrom [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SDE' and JOB_SUB_GROUP ='SDE - ASA 02'",
+						"sqlReaderQuery": "select case when FULL_LOAD_FLG ='N' then JOB_SCRIPT +' and '+INCREMENTAL_COL +'>= dateadd(day,-'+convert(varchar(2),PRUNE_DAYS)+',getdate())' else JOB_SCRIPT end as SRC_LIST, [SOURCE_SCHEMA] as SRC_SCHEMA,[SOURCE_TABLE] as SRC_TBL,  [TARGET_TABLE] as TGT_TBL \nfrom [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SDE' and JOB_SUB_GROUP ='SDE - ASA 02'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -232,7 +232,7 @@
 							],
 							"policy": {
 								"timeout": "7.00:00:00",
-								"retry": 3,
+								"retry": 0,
 								"retryIntervalInSeconds": 30,
 								"secureOutput": false,
 								"secureInput": false
@@ -268,8 +268,7 @@
 										"referenceName": "LS_STORAGE_ACCOUNT_DEV",
 										"type": "LinkedServiceReference"
 									},
-									"path": "logadf",
-									"enableCompression": true
+									"path": "logadf"
 								}
 							},
 							"inputs": [
@@ -478,114 +477,8 @@
 									"type": "Expression"
 								}
 							}
-						},
-						{
-							"name": "SEND ERROR MESSAGE",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "Set TGT Table",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Get JOB_ID",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set Source Script",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set SRC Table",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set SRC Schema",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Insert Log Before Load Data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Copy data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Insert Log Load Fail Data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Insert Log Load Finish Data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Update Batch_ID",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "SEND ERROR EMAIL",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"ErrorMessage": {
-										"value": "@item().errors[0].Message",
-										"type": "Expression"
-									}
-								}
-							}
 						}
 					]
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE LOOKUP SRC LIST",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Lookup_SRC_List",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Lookup_SRC_List').output.errors[0].Message",
-							"type": "Expression"
-						}
-					}
 				}
 			}
 		],
@@ -616,9 +509,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-11-01T10:10:44Z",
-		"lastUpdateUtc": "2023-02-17T15:11:05Z",
-		"createTimeUtc": "2022-05-29T13:16:12Z"
+		"lastPublishTime": "2022-08-04T08:07:29Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

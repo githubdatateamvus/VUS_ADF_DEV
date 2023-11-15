@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "VUS_SDE_GROUP_ASA",
+						"referenceName": "VUS_SDE_GROUP_ASA 03",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -34,65 +34,13 @@
 					},
 					"waitOnCompletion": true
 				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE VUS_SDE_GROUP_ASA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_SDE_GROUP_ASA",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_SDE_GROUP_ASA').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE VUS_SIL_GROUP_ASA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_SIL_GROUP_ASA",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_SIL_GROUP_ASA').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
 			}
 		],
 		"folder": {
 			"name": "VUS MASTER"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-02-10T04:19:16Z"
+		"lastPublishTime": "2022-08-04T08:07:30Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

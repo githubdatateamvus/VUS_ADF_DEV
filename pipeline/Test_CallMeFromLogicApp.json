@@ -1,0 +1,27 @@
+{
+	"name": "Test_CallMeFromLogicApp",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": {
+						"value": "@pipeline().parameters.WaitTime",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"WaitTime": {
+				"type": "int"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-09-03T13:43:31Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

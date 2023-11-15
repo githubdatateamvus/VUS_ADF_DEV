@@ -1,0 +1,13 @@
+{
+	"name": "DS_DWH_SYHNAPSE_ANYSCHEMA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DWH_SYNAPSE_DEV",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

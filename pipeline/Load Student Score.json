@@ -1,0 +1,26 @@
+{
+	"name": "Load Student Score",
+	"properties": {
+		"activities": [
+			{
+				"name": "Load API_ILE",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Load API_ILE",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "VUS API"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-11T07:26:48Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

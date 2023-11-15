@@ -7,7 +7,7 @@
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -129,72 +129,8 @@
 									"type": "Expression"
 								}
 							}
-						},
-						{
-							"name": "SEND ERROR MESSAGE",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "Set Source Script",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set Target Table",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "SIL Store Procedure",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "SEND ERROR EMAIL",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"ErrorMessage": {
-										"value": "@item().Error.message",
-										"type": "Expression"
-									}
-								}
-							}
 						}
 					]
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE LOOKUP SRC LIST",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Lookup SRC List",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Lookup SRC List').Error.message",
-							"type": "Expression"
-						}
-					}
 				}
 			}
 		],
@@ -219,9 +155,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-03-25T11:45:21Z",
-		"lastUpdateUtc": "2022-12-19T05:30:05Z",
-		"createTimeUtc": "2022-05-21T08:30:56Z"
+		"lastPublishTime": "2022-08-04T08:07:28Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -7,7 +7,7 @@
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false
@@ -86,32 +86,6 @@
 							"typeProperties": {
 								"waitTimeInSeconds": 30
 							}
-						},
-						{
-							"name": "SEND ERROR MESSAGE GetAzureASRefreshStatus",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "GetAzureASRefreshStatus",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "SEND ERROR EMAIL",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"ErrorMessage": {
-										"value": "@activity('GetAzureASRefreshStatus').output.errors[0].Message",
-										"type": "Expression"
-									}
-								}
-							}
 						}
 					],
 					"timeout": "7.00:00:00"
@@ -152,7 +126,7 @@
 					}
 				],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false
@@ -228,7 +202,7 @@
 					}
 				],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 180,
 					"secureOutput": false
@@ -251,110 +225,6 @@
 						"CommitMode": "transactional",
 						"MaxParallelism": 10,
 						"RetryCount": 2
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE LOGIN AS",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Login",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Login').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE StartProcessingAzureAS",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "StartProcessingAzureAS",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('StartProcessingAzureAS').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE GetAzureASRefreshes",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "GetAzureASRefreshes",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('GetAzureASRefreshes').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE FilterToCurrentRefresh",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "FilterToCurrentRefresh",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('FilterToCurrentRefresh').Error.message",
-							"type": "Expression"
-						}
 					}
 				}
 			}
@@ -400,9 +270,7 @@
 			"name": "AZURE AS"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-03-25T06:51:57Z",
-		"lastUpdateUtc": "2022-09-20T14:20:56Z",
-		"createTimeUtc": "2021-11-18T14:45:53Z"
+		"lastPublishTime": "2022-08-04T08:07:26Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

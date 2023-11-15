@@ -5,11 +5,11 @@
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
-			"connectionString": "integrated security=False;data source=10.1.100.11;initial catalog=VUS_App_0204;user id=user_tuyensinh",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI2MWJhOTcxNC04MjYzLTQzZTYtYjZlOS03NGIyNDZkYmZkOGQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "integrated security=False;data source=192.168.1.56\\MSSQLDEVELOPER;initial catalog=VUS_App_0204;user id=tuyensinh_dev",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkNDZkNDI3MC00ZjA1LTQ3ZjktOWE3ZC1lNTRmYTQ4YzA2ZjEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
-			"referenceName": "IR-PROD",
+			"referenceName": "IR-Share",
 			"type": "IntegrationRuntimeReference"
 		}
 	}

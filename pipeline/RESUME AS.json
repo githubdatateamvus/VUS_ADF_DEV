@@ -55,7 +55,7 @@
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false
@@ -117,32 +117,6 @@
 					],
 					"timeout": "7.00:00:00"
 				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE CheckIfAzureASSuspended",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "CheckIfAzureASSuspended",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('CheckIfAzureASSuspended').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
 			}
 		],
 		"parameters": {
@@ -167,9 +141,7 @@
 			"name": "AZURE AS"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-03-25T06:47:27Z",
-		"lastUpdateUtc": "2022-09-20T14:20:56Z",
-		"createTimeUtc": "2021-11-18T14:45:53Z"
+		"lastPublishTime": "2022-08-04T08:07:26Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

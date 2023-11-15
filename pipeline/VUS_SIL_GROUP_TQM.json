@@ -136,72 +136,8 @@
 									"type": "Expression"
 								}
 							}
-						},
-						{
-							"name": "SEND ERROR MESSAGE",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "Set Source Script",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set Target Table",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "SIL Store Procedure",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "SEND ERROR EMAIL",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"ErrorMessage": {
-										"value": "@item().Error.message",
-										"type": "Expression"
-									}
-								}
-							}
 						}
 					]
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE LOOKUP SRC LIST",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Lookup SRC List",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Lookup SRC List').Error.message",
-							"type": "Expression"
-						}
-					}
 				}
 			}
 		],
@@ -227,7 +163,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-08-26T08:25:55Z"
+		"lastPublishTime": "2022-08-04T08:07:28Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

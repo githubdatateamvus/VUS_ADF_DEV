@@ -7,7 +7,7 @@
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlDWSource",
-						"sqlReaderQuery": "SELECT [JOB_SCRIPT] AS [SRC_LIST], [SOURCE_TABLE] AS [SRC_TBL], [TARGET_TABLE] AS [TGT_TBL] \nFROM [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' AND JOB_GROUP='PLP' AND JOB_SUB_GROUP='PLP - G00' \nORDER BY [JOB_ORDER] ASC",
+						"sqlReaderQuery": "SELECT [JOB_SCRIPT] AS [SRC_LIST], [SOURCE_TABLE] AS [SRC_TBL], [TARGET_TABLE] AS [TGT_TBL] \nFROM [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' AND JOB_GROUP='PLP' AND JOB_SUB_GROUP='PLP - G00' ",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -129,72 +129,8 @@
 									"type": "Expression"
 								}
 							}
-						},
-						{
-							"name": "SEND ERROR MESSAGE",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "Set Source Script",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set Target Table",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "SIL Store Procedure",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "SEND ERROR EMAIL",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"ErrorMessage": {
-										"value": "@item().Error.message",
-										"type": "Expression"
-									}
-								}
-							}
 						}
 					]
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE LOOKUP SRC LIST",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Lookup SRC List",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Lookup SRC List').Error.message",
-							"type": "Expression"
-						}
-					}
 				}
 			}
 		],
@@ -219,9 +155,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-03-25T11:22:30Z",
-		"lastUpdateUtc": "2023-02-07T04:28:08Z",
-		"createTimeUtc": "2022-05-22T16:53:10Z"
+		"lastPublishTime": "2022-08-04T08:07:28Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -67,7 +67,7 @@
 					}
 				],
 				"policy": {
-					"timeout": "12:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -110,182 +110,6 @@
 					},
 					"waitOnCompletion": true
 				}
-			},
-			{
-				"name": "SEND ERROR MESAGE PLP GROUP 00",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP_GROUP_00",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_PLP_GROUP_00').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE PLP GROUP 01",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP_GROUP_01",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_PLP_GROUP_01').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE REBUILD INDEX",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "REBUILD INDEX",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('REBUILD INDEX').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE PLP GROUP 02",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP_GROUP_02",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_PLP_GROUP_02').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE PLP GROUP 03",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP_GROUP_03",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_PLP_GROUP_03').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "VUS_PLP_GROUP_04",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP_GROUP_03",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "VUS_PLP_GROUP_04",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "SEND ERROR MESAGE PLP GROUP 04",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "VUS_PLP_GROUP_04",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('VUS_PLP_GROUP_04').Error.message",
-							"type": "Expression"
-						}
-					}
-				}
 			}
 		],
 		"parameters": {
@@ -298,9 +122,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-10-03T01:58:02Z",
-		"lastUpdateUtc": "2022-11-09T15:50:10Z",
-		"createTimeUtc": "2022-05-21T08:31:49Z"
+		"lastPublishTime": "2022-08-04T08:07:30Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -471,114 +471,8 @@
 									"type": "Expression"
 								}
 							}
-						},
-						{
-							"name": "SEND ERROR MESSAGE",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "Set TGT Table",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Get JOB_ID",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set Source Script",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set SRC Table",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Set SRC Schema",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Insert Log Before Load Data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Copy data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Insert Log Load Finish Data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Insert Log Load Fail Data",
-									"dependencyConditions": [
-										"Failed"
-									]
-								},
-								{
-									"activity": "Update Batch_ID",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "SEND ERROR EMAIL",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"ErrorMessage": {
-										"value": "@item().Error.message",
-										"type": "Expression"
-									}
-								}
-							}
 						}
 					]
-				}
-			},
-			{
-				"name": "SEND ERROR MESSAGE LOOKUP SRC LIST",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Lookup_SRC_List",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "SEND ERROR EMAIL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"ErrorMessage": {
-							"value": "@activity('Lookup_SRC_List').Error.message",
-							"type": "Expression"
-						}
-					}
 				}
 			}
 		],
@@ -610,7 +504,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-08-26T08:25:54Z"
+		"lastPublishTime": "2022-08-04T08:07:29Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
