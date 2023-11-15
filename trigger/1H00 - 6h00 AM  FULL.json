@@ -2,7 +2,7 @@
 	"name": "1H00 - 6h00 AM  FULL",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {

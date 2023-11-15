@@ -270,7 +270,7 @@
 			"name": "AZURE AS"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-08-04T08:07:26Z"
+		"lastPublishTime": "2023-11-15T06:35:03Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -203,7 +203,7 @@
 			"name": "VUS MASTER"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-08-04T08:41:53Z"
+		"lastPublishTime": "2023-11-15T06:35:20Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

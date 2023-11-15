@@ -226,7 +226,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-10-25T01:10:30Z"
+		"lastPublishTime": "2023-11-15T06:35:10Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
