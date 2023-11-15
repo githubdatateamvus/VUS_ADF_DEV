@@ -1,0 +1,32 @@
+{
+	"name": "10h30 - 13h30 AM ASA",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "ASA SALE PIPELINE",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2023-02-13T10:41:00",
+				"timeZone": "SE Asia Standard Time",
+				"schedule": {
+					"minutes": [
+						30
+					],
+					"hours": [
+						10
+					]
+				}
+			}
+		}
+	}
+}

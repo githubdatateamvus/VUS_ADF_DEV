@@ -1,0 +1,148 @@
+{
+	"name": "VUS_SDE_GROUP_ASA_CORE_EDU_CC",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_SRC_List",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": " select JOB_SCRIPT as SRC_LIST, [SOURCE_SCHEMA] as SRC_SCHEMA,[SOURCE_TABLE] as SRC_TBL,  [TARGET_TABLE] as TGT_TBL from [ADF].[ETL_JOB] WHERE 1=1 \r\n                                                                                                                                                                                                                                                                                       AND [JOB_SUB_GROUP] = 'SDE - CORE - EDU - SYS' \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   --AND [JOB_GROUP] ='SDE - SALE' \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   AND [ACTIVE_FLG] ='Y'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_JOB"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_SRC_List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_SRC_List').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "VUS_PIPELINE_DETAIL",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "VUS_PIPELINE_DATACOPY",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"TGT_Table": {
+										"value": "@{Item().TGT_TBL}",
+										"type": "Expression"
+									},
+									"Source_Script": {
+										"value": "@{Item().SRC_LIST}",
+										"type": "Expression"
+									},
+									"SRC_Table": {
+										"value": "@{Item().SRC_TBL}",
+										"type": "Expression"
+									},
+									"SRC_Schema": {
+										"value": "@{Item().SRC_SCHEMA}",
+										"type": "Expression"
+									},
+									"BATCH_ID": {
+										"value": "@pipeline().parameters.BATCH_ID",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE LOOKUP SRC LIST",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Lookup_SRC_List",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('Lookup_SRC_List').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"BATCH_ID": {
+				"type": "string",
+				"defaultValue": "19000101"
+			}
+		},
+		"variables": {
+			"SOURCE": {
+				"type": "String"
+			},
+			"Source_Script": {
+				"type": "String"
+			},
+			"SRC_Table": {
+				"type": "String"
+			},
+			"TGT_Table": {
+				"type": "String"
+			},
+			"SRC_Schema": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "VUS_ETL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-02T03:24:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

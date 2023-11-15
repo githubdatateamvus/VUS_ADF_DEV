@@ -1,0 +1,153 @@
+{
+	"name": "LOAD PROGRAM MAPPING",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data Program Mapping",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table STG.W_EXL_COURSE_TYPE_INFO",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CourseTypeID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CourseTypeID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CourseTypeCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CourseTypeCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CourseTypeName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CourseTypeName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CourseTypeGroupCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CourseTypeGroupCode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CourseTypeCategoryname",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CourseTypeCategoryname",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CourseTypeGroupCustom1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CourseTypeGroupCustom1",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CourseTypeGroupCustom1Order",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CourseTypeGroupCustom1Order",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Program_Mapping",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_EXL_COURSE_TYPE_INFO"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "VUS EXCEL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-12-21T14:23:33Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

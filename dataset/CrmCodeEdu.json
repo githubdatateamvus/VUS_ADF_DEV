@@ -1,0 +1,16 @@
+{
+	"name": "CrmCodeEdu",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DynamicsCrm1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DynamicsCrmEntity",
+		"schema": [],
+		"typeProperties": {
+			"entityName": "hs_phone_call_log"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

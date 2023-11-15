@@ -1,0 +1,16 @@
+{
+	"name": "Core_Edu_Test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Core_Edu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DynamicsEntity",
+		"schema": [],
+		"typeProperties": {
+			"entityName": "contact"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

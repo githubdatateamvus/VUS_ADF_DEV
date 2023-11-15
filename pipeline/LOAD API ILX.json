@@ -1,0 +1,351 @@
+{
+	"name": "LOAD API ILX",
+	"properties": {
+		"activities": [
+			{
+				"name": "LOAD API ILX",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE [STG].[W_STUDENT_SCORE_ILX]",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac1_listening']"
+								},
+								"sink": {
+									"name": "prac1_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac1_ielts_listening']"
+								},
+								"sink": {
+									"name": "prac1_ielts_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac1_reading']"
+								},
+								"sink": {
+									"name": "prac1_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac1_ielts_reading']"
+								},
+								"sink": {
+									"name": "prac1_ielts_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac1_writing']"
+								},
+								"sink": {
+									"name": "prac1_writing",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac2_listening']"
+								},
+								"sink": {
+									"name": "prac2_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac2_ielts_listening']"
+								},
+								"sink": {
+									"name": "prac2_ielts_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac2_reading']"
+								},
+								"sink": {
+									"name": "prac2_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac2_ielts_reading']"
+								},
+								"sink": {
+									"name": "prac2_ielts_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac2_writing']"
+								},
+								"sink": {
+									"name": "prac2_writing",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac3_listening']"
+								},
+								"sink": {
+									"name": "prac3_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac3_ielts_listening']"
+								},
+								"sink": {
+									"name": "prac3_ielts_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac3_reading']"
+								},
+								"sink": {
+									"name": "prac3_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac3_ielts_reading']"
+								},
+								"sink": {
+									"name": "prac3_ielts_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac3_writing']"
+								},
+								"sink": {
+									"name": "prac3_writing",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac4_listening']"
+								},
+								"sink": {
+									"name": "prac4_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac4_ielts_listening']"
+								},
+								"sink": {
+									"name": "prac4_ielts_listening",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac4_reading']"
+								},
+								"sink": {
+									"name": "prac4_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac4_ielts_reading']"
+								},
+								"sink": {
+									"name": "prac4_ielts_reading",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['prac4_writing']"
+								},
+								"sink": {
+									"name": "prac4_writing",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mt_ielts_overall']"
+								},
+								"sink": {
+									"name": "mt_ielts_overall",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_ILX",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_ILX"
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"Count": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "VUS API"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-01T14:52:12Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

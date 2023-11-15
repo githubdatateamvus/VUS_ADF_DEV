@@ -1,0 +1,16 @@
+{
+	"name": "LIVE_SOURCE",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=10.1.100.14;initial catalog=PBDT;user id=user_finance",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwZDIxNTNiMS02MTc4LTRlNjYtYTkzZi01NGIxMjgxNzM4MDQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IR-PROD",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

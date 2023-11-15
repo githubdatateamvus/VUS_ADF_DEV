@@ -1,0 +1,25 @@
+{
+	"name": "ASA_MKT_Target",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_STORAGE_ACCOUNT_PROD",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SRC_EXCEL"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ASA Target MKT.xlsx",
+				"fileSystem": "excel"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

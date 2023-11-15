@@ -1,0 +1,142 @@
+{
+	"name": "VUS_SDE_ASA",
+	"properties": {
+		"activities": [
+			{
+				"name": "VUS_SDE_GROUP_ASA 03",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 02",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA 03",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_ASA 01",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA 01",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_ASA 02",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA 02",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP ASA 02",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 02",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA 02').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP ASA 01",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 01",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA 01').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP ASA_03",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 03",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA 03').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"BATCH_ID": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "VUS_ETL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-02-10T04:19:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

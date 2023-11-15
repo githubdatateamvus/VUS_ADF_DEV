@@ -1,0 +1,489 @@
+{
+	"name": "VUS_SDE",
+	"properties": {
+		"activities": [
+			{
+				"name": "VUS_SDE_GROUP_ASA 03",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA 03",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_QLGV",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_QLGV",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_TQM 01",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_QLGV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_TQM 01",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_CRM",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 03",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_CRM",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_ASA 01",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA 01",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_ASA 02",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_TQM 02",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA 02",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_TQM 02",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_TQM 02",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP QLGV",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_QLGV",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_QLGV').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP CRM",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_CRM",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_CRM').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP ASA_03",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 03",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA 03').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP TQM 01",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_TQM 01",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_TQM 01').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP ASA 01",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 01",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA 01').output.errors[0].Message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP ASA 02",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 02",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA 02').output.errors[0].Message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP TQM 02",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_TQM 02",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_TQM 02').output.errors[0].Message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Load Student Score",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA 01",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LOAD STUDENT SCORE LMS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP TQM 02_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load Student Score",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('Load Student Score').output.errors[0].Message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Load Call Log",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_CRM",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LOAD CALL LOG",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE LOAD CALL LOG",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load Call Log",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('Load Call Log').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP CORE_EDU",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA_CORE_EDU_V2",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA_CORE_EDU_V2').output.errors[0].Message\n",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_ASA_CORE_EDU_V2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA_CORE_EDU_V1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA_CORE_EDU_DF",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_ASA_CORE_EDU_V1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_ASA_CORE_EDU_CC",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "SEND ERROR MESAGE SDE GROUP CORE_EDU_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_ASA_CORE_EDU_V1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_GROUP_ASA_CORE_EDU_V1').output.errors[0].Message\n",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"BATCH_ID": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "VUS_ETL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-01T14:55:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

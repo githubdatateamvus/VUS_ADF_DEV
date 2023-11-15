@@ -1,0 +1,442 @@
+{
+	"name": "LOAD API SK",
+	"properties": {
+		"activities": [
+			{
+				"name": "LOAD API SK",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE STG.W_STUDENT_SCORE_SK",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_listening']"
+								},
+								"sink": {
+									"name": "quiz1_listening",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_vocabulary']"
+								},
+								"sink": {
+									"name": "quiz1_vocabulary",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_grammar']"
+								},
+								"sink": {
+									"name": "quiz1_grammar",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_reading']"
+								},
+								"sink": {
+									"name": "quiz1_reading",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_writing']"
+								},
+								"sink": {
+									"name": "quiz1_writing",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_overall']"
+								},
+								"sink": {
+									"name": "quiz1_overall",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_listening']"
+								},
+								"sink": {
+									"name": "quiz2_listening",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_vocabulary']"
+								},
+								"sink": {
+									"name": "quiz2_vocabulary",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_grammar']"
+								},
+								"sink": {
+									"name": "quiz2_grammar",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_reading']"
+								},
+								"sink": {
+									"name": "quiz2_reading",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_writing']"
+								},
+								"sink": {
+									"name": "quiz2_writing",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_overall']"
+								},
+								"sink": {
+									"name": "quiz2_overall",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_listening']"
+								},
+								"sink": {
+									"name": "final_written_listening",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_vocabulary']"
+								},
+								"sink": {
+									"name": "final_written_vocabulary",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_grammar']"
+								},
+								"sink": {
+									"name": "final_written_grammar",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_reading']"
+								},
+								"sink": {
+									"name": "final_written_reading",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_writing']"
+								},
+								"sink": {
+									"name": "final_written_writing",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_overall']"
+								},
+								"sink": {
+									"name": "final_written_overall",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_absent']"
+								},
+								"sink": {
+									"name": "final_written_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_written_notes']"
+								},
+								"sink": {
+									"name": "final_written_notes",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_oral']"
+								},
+								"sink": {
+									"name": "final_oral",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_oral_comment']"
+								},
+								"sink": {
+									"name": "final_oral_comment",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['participation']"
+								},
+								"sink": {
+									"name": "participation",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['avg_quiz']"
+								},
+								"sink": {
+									"name": "avg_quiz",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['final_result']"
+								},
+								"sink": {
+									"name": "final_result",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['result']"
+								},
+								"sink": {
+									"name": "result",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ranking']"
+								},
+								"sink": {
+									"name": "ranking",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_notes']"
+								},
+								"sink": {
+									"name": "quiz1_notes",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_notes']"
+								},
+								"sink": {
+									"name": "quiz2_notes",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_SK",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_SK"
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"Count": {
+				"type": "String",
+				"defaultValue": "0"
+			}
+		},
+		"folder": {
+			"name": "VUS API"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-01T14:53:47Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

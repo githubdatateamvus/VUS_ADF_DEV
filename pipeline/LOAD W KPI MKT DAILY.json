@@ -1,0 +1,338 @@
+{
+	"name": "LOAD W KPI MKT DAILY",
+	"properties": {
+		"activities": [
+			{
+				"name": "W_KPI_MKT_DAILY",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE [STG].[W_KPI_MKT_DAILY]",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Date",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Date",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Type",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Type",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Media",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Media",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Location",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Location",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "KPI",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "KPI",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "YEAR MONTH",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "YEAR MONTH",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Campus Code",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Campus Code",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "GroupProgramCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "GroupProgramCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "VUS_Target_Mkt_Source",
+						"type": "DatasetReference",
+						"parameters": {
+							"SCHEMA_NAME": "dbo",
+							"TABLE_NAME": "W_KPI_MKT_DAILY"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_KPI_MKT_DAILY"
+						}
+					}
+				]
+			},
+			{
+				"name": "FND_W_KPI_MKT_DAILY",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "W_KPI_MKT_DAILY",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "with b as (\n     select branch_id CampusCode\n\t ,'ASA~'+ cast(branchid as varchar(255)) CampusKey\n\t from [FND].[W_ASA_SYS_BRANCH] where Enabled=1 \n\t )\n\t ,a as (\n\t SELECT \n\t     kpi.[Date] AS DateNumber\n\t\t ,CAST((  REPLACE(kpi.[YEAR MONTH], '-', '')  + FORMAT(kpi.[Date],'00')) as varchar(255)) AS DateKey\n\t\t ,kpi.[Type] KpiType\n\t\t ,CASE\n\t\t   WHEN  kpi.[Media] =  'DMK' THEN 'Direct'\n\t\t   ELSE  kpi.[Media] END AS Media\n\t\t ,kpi.[Location] AS Area\n\t\t ,kpi.[Campus Code] AS CampusCode\n\t\t ,kpi.[KPI]\n\t\t ,Case \n\t\t when kpi.GroupProgramCode is null then 'SK'\n\t\t when kpi.GroupProgramCode ='' then 'SK'\n\t\t else kpi.GroupProgramCode end  AS GroupProgramCode\n\t  FROM [STG].[W_KPI_MKT_DAILY] kpi --WHERE kpi.[YEAR MONTH] = FORMAT(GETDATE(), 'yyyy-MM')\n) \n\nSELECT a.*,b.CampusKey FROM a\nleft join b on a.CampusCode=b.campuscode\nORDER BY DateKey,KpiType,media,a.campuscode",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DateKey",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "DateKey",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DateNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "DateNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "CampusKey",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "CampusKey",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CampusCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "CampusCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Area",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Area",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Media",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Media",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "KPI",
+									"type": "Single",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "KPI",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "KpiType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "KpiType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "GroupProgramCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "GroupProgramCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_KPI_MKT_DAILY"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_MKT_KPI_TARGET_MANUAL"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "VUS EXCEL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-08-01T02:46:07Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

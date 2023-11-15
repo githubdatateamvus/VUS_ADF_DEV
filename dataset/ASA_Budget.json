@@ -1,0 +1,54 @@
+{
+	"name": "ASA_Budget",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_STORAGE_ACCOUNT_PROD",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SRC_EXCEL"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ASA Budget.xlsx",
+				"fileSystem": "excel"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "DATE",
+				"type": "String"
+			},
+			{
+				"name": "CAMPUS",
+				"type": "String"
+			},
+			{
+				"name": "PROGRAM",
+				"type": "String"
+			},
+			{
+				"name": "CATEGORY",
+				"type": "String"
+			},
+			{
+				"name": "TYPE",
+				"type": "String"
+			},
+			{
+				"name": "SUB_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "VALUE",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

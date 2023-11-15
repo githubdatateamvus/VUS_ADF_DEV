@@ -1,0 +1,653 @@
+{
+	"name": "ASA FULL PIPELINE",
+	"properties": {
+		"activities": [
+			{
+				"name": "START SYNAPSE",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "RESUME SYNAPSE",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "SET START BATCH TIME",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "SCALE UP DB",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "START_BATCH_TIME",
+					"value": {
+						"value": "@formatDateTime(addhours(utcnow(), 7), 'dd-MM-yyyy HH:mm:ss')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "START BATCH",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "SET START BATCH TIME",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderStoredProcedureName": "[ADF].[proc_etl_start_batch]",
+						"storedProcedureParameters": {
+							"p_batch_type_id": {
+								"type": "Int32",
+								"value": "0"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "A"
+						}
+					}
+				}
+			},
+			{
+				"name": "GET BATCH_ID",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "START BATCH",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "BATCH_ID",
+					"value": {
+						"value": "@string(activity('START BATCH').output.firstrow.AAA)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "END BATCH",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "VUS_PLP",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[ADF].[proc_etl_end_batch]",
+					"storedProcedureParameters": {
+						"p_batch_id": {
+							"value": {
+								"value": "@variables('BATCH_ID')",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_DWH_SYNAPSE_DEV",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "REFRESH AS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "END BATCH",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "REFRESH AS FULL ASA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PAUSE SYNAPSE",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "SCALE DOWN DB",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PAUSE SYNAPSE",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"subscriptions": "d607421b-81ca-426a-8942-2fd12f5c9611",
+						"resourceGroups": "DWCLOUD-Prod",
+						"servers": "vus-synapseprod-ws",
+						"databases": "VUSDWHPRO"
+					}
+				}
+			},
+			{
+				"name": "VUS_SDE_ASA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "GET BATCH_ID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_ASA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SIL_ASA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_ASA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SIL_ASA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_PLP",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SIL_GROUP_CRM",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "VUS_SIL_ASA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_PLP",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "SCALE UP DB",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "START SYNAPSE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SCALE UP DB",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"databases": "VUSDWHPRO",
+						"Subscriptions": "d607421b-81ca-426a-8942-2fd12f5c9611",
+						"ResourceGroups": "DWCLOUD-Prod",
+						"Servers": "vus-synapseprod-ws"
+					}
+				}
+			},
+			{
+				"name": "SCALE DOWN DB",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "REFRESH AS",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SCALE DOWN DB",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"databases": "VUSDWHPRO",
+						"Subscriptions": "d607421b-81ca-426a-8942-2fd12f5c9611",
+						"ResourceGroups": "DWCLOUD-Prod",
+						"Servers": "vus-synapseprod-ws"
+					}
+				}
+			},
+			{
+				"name": "SEND SUCCESS EMAIL",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PAUSE SYNAPSE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND SUCCESS EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"PipelineName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE START SYNAPSE",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "START SYNAPSE",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('START SYNAPSE').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE SCALE UP DB",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "SCALE UP DB",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('SCALE UP DB').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE START BATCH",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "START BATCH",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('START BATCH').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE VUS_SDE_ASA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_ASA",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SDE_ASA').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE VUS_SIL_ASA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SIL_ASA",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_SIL_ASA').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE VUS_PLP",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_PLP",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('VUS_PLP').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE END BATCH",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "END BATCH",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('END BATCH').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE REFRESH AS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "REFRESH AS",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('REFRESH AS').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE SCALE DOWN DB",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "SCALE DOWN DB",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('SCALE DOWN DB').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE PAUSE SYNAPSE",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PAUSE SYNAPSE",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"ErrorMessage": {
+							"value": "@activity('PAUSE SYNAPSE').Error.message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "VUS_SDE_GROUP_CRM",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "GET BATCH_ID",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SDE_GROUP_CRM",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_SIL_GROUP_CRM",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_SDE_GROUP_CRM",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_SIL_GROUP_CRM",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"BATCH_ID": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"CURRENT_DATA_TIME": {
+				"type": "String"
+			},
+			"START_BATCH_TIME": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "VUS MASTER"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-01-31T10:00:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

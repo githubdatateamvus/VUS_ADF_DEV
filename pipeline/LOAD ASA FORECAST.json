@@ -1,0 +1,154 @@
+{
+	"name": "LOAD ASA FORECAST",
+	"properties": {
+		"activities": [
+			{
+				"name": "LOAD ASA FORECAST",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table STG.W_EXL_ASA_FORECAST",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DATE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DATE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAMPUS",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CAMPUS",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PROGRAM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PROGRAM",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CATEGORY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CATEGORY",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TYPE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TYPE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SUB_TYPE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SUB_TYPE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "VALUE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "VALUE",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ASA_Forecast",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_EXL_ASA_FORECAST"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "VUS EXCEL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-01T14:33:09Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

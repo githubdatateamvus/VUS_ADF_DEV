@@ -1,0 +1,34 @@
+{
+	"name": "DS_DWH_SYNAPSE_ADF_ANYSCHEMA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DWH_SYNAPSE_DEV",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			},
+			"TableSchema": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "SYNAPSE"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "STG",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "W_CORE_EDU_CONTACT_Temp",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

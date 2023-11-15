@@ -1,0 +1,6207 @@
+{
+	"name": "LOAD API K12 MATH 6",
+	"properties": {
+		"activities": [
+			{
+				"name": "LOAD API Math 6",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_seq']"
+								},
+								"sink": {
+									"name": "ability_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_absent']"
+								},
+								"sink": {
+									"name": "ability_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_total']"
+								},
+								"sink": {
+									"name": "ability_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_seq']"
+								},
+								"sink": {
+									"name": "quiz_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_absent']"
+								},
+								"sink": {
+									"name": "quiz_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_total']"
+								},
+								"sink": {
+									"name": "quiz_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_seq']"
+								},
+								"sink": {
+									"name": "quiz1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_total']"
+								},
+								"sink": {
+									"name": "quiz1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_seq']"
+								},
+								"sink": {
+									"name": "quiz2_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_total']"
+								},
+								"sink": {
+									"name": "quiz2_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_seq']"
+								},
+								"sink": {
+									"name": "quiz3_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_absent']"
+								},
+								"sink": {
+									"name": "quiz3_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_total']"
+								},
+								"sink": {
+									"name": "quiz3_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_seq']"
+								},
+								"sink": {
+									"name": "mid_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_absent']"
+								},
+								"sink": {
+									"name": "mid_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_mutiple_choice']"
+								},
+								"sink": {
+									"name": "mid_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1']"
+								},
+								"sink": {
+									"name": "mid_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_3a']"
+								},
+								"sink": {
+									"name": "mid_algebra_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_3b']"
+								},
+								"sink": {
+									"name": "mid_algebra_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_4a']"
+								},
+								"sink": {
+									"name": "mid_geometry_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_4b']"
+								},
+								"sink": {
+									"name": "mid_geometry_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_total']"
+								},
+								"sink": {
+									"name": "mid_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_seq']"
+								},
+								"sink": {
+									"name": "mid1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_absent']"
+								},
+								"sink": {
+									"name": "mid1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_mutiple_choice']"
+								},
+								"sink": {
+									"name": "mid1_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_3a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_3b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_4a']"
+								},
+								"sink": {
+									"name": "mid1_geometry_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_4b']"
+								},
+								"sink": {
+									"name": "mid1_geometry_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_total']"
+								},
+								"sink": {
+									"name": "mid1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_seq']"
+								},
+								"sink": {
+									"name": "fin_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_absent']"
+								},
+								"sink": {
+									"name": "fin_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_mutiple_choice']"
+								},
+								"sink": {
+									"name": "fin_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1']"
+								},
+								"sink": {
+									"name": "fin_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3']"
+								},
+								"sink": {
+									"name": "fin_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_4a']"
+								},
+								"sink": {
+									"name": "fin_algebra_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_4b']"
+								},
+								"sink": {
+									"name": "fin_algebra_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_6a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_total']"
+								},
+								"sink": {
+									"name": "fin_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_seq']"
+								},
+								"sink": {
+									"name": "fin1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_absent']"
+								},
+								"sink": {
+									"name": "fin1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_mutiple_choice']"
+								},
+								"sink": {
+									"name": "fin1_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_4a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_4b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_6a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_total']"
+								},
+								"sink": {
+									"name": "fin1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_K12_Math6",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_K12_MATH6"
+						}
+					}
+				]
+			},
+			{
+				"name": "LOAD API Math 7",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "LOAD API Math 6",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_seq']"
+								},
+								"sink": {
+									"name": "ability_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_absent']"
+								},
+								"sink": {
+									"name": "ability_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_total']"
+								},
+								"sink": {
+									"name": "ability_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_seq']"
+								},
+								"sink": {
+									"name": "quiz_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_absent']"
+								},
+								"sink": {
+									"name": "quiz_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_total']"
+								},
+								"sink": {
+									"name": "quiz_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_seq']"
+								},
+								"sink": {
+									"name": "quiz1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_total']"
+								},
+								"sink": {
+									"name": "quiz1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_seq']"
+								},
+								"sink": {
+									"name": "quiz2_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_total']"
+								},
+								"sink": {
+									"name": "quiz2_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_seq']"
+								},
+								"sink": {
+									"name": "quiz3_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_absent']"
+								},
+								"sink": {
+									"name": "quiz3_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_total']"
+								},
+								"sink": {
+									"name": "quiz3_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_seq']"
+								},
+								"sink": {
+									"name": "mid_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_absent']"
+								},
+								"sink": {
+									"name": "mid_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_mutiple_choice']"
+								},
+								"sink": {
+									"name": "mid_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1']"
+								},
+								"sink": {
+									"name": "mid_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_3']"
+								},
+								"sink": {
+									"name": "mid_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_4a']"
+								},
+								"sink": {
+									"name": "mid_geometry_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_4b']"
+								},
+								"sink": {
+									"name": "mid_geometry_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_total']"
+								},
+								"sink": {
+									"name": "mid_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_seq']"
+								},
+								"sink": {
+									"name": "mid1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_absent']"
+								},
+								"sink": {
+									"name": "mid1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_mutiple_choice']"
+								},
+								"sink": {
+									"name": "mid1_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_3']"
+								},
+								"sink": {
+									"name": "mid1_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_4a']"
+								},
+								"sink": {
+									"name": "mid1_geometry_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_4b']"
+								},
+								"sink": {
+									"name": "mid1_geometry_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_total']"
+								},
+								"sink": {
+									"name": "mid1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_seq']"
+								},
+								"sink": {
+									"name": "fin_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_absent']"
+								},
+								"sink": {
+									"name": "fin_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_mutiple_choice']"
+								},
+								"sink": {
+									"name": "fin_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1']"
+								},
+								"sink": {
+									"name": "fin_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3a']"
+								},
+								"sink": {
+									"name": "fin_algebra_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3b']"
+								},
+								"sink": {
+									"name": "fin_algebra_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_4']"
+								},
+								"sink": {
+									"name": "fin_geometry_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_6a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_6b']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_6b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_total']"
+								},
+								"sink": {
+									"name": "fin_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_seq']"
+								},
+								"sink": {
+									"name": "fin1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_absent']"
+								},
+								"sink": {
+									"name": "fin1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_mutiple_choice']"
+								},
+								"sink": {
+									"name": "fin1_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_4']"
+								},
+								"sink": {
+									"name": "fin1_geometry_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_6a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_6b']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_6b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_total']"
+								},
+								"sink": {
+									"name": "fin1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_K12_Math7",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_K12_MATH7"
+						}
+					}
+				]
+			},
+			{
+				"name": "LOAD API Math 8",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "LOAD API Math 7",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_seq']"
+								},
+								"sink": {
+									"name": "ability_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_absent']"
+								},
+								"sink": {
+									"name": "ability_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_total']"
+								},
+								"sink": {
+									"name": "ability_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_seq']"
+								},
+								"sink": {
+									"name": "quiz_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_absent']"
+								},
+								"sink": {
+									"name": "quiz_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_total']"
+								},
+								"sink": {
+									"name": "quiz_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_seq']"
+								},
+								"sink": {
+									"name": "quiz1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_total']"
+								},
+								"sink": {
+									"name": "quiz1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_seq']"
+								},
+								"sink": {
+									"name": "quiz2_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_total']"
+								},
+								"sink": {
+									"name": "quiz2_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_seq']"
+								},
+								"sink": {
+									"name": "quiz3_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_absent']"
+								},
+								"sink": {
+									"name": "quiz3_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_total']"
+								},
+								"sink": {
+									"name": "quiz3_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_seq']"
+								},
+								"sink": {
+									"name": "mid_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_absent']"
+								},
+								"sink": {
+									"name": "mid_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_mutiple_choice']"
+								},
+								"sink": {
+									"name": "mid_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1']"
+								},
+								"sink": {
+									"name": "mid_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_3']"
+								},
+								"sink": {
+									"name": "mid_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_4a']"
+								},
+								"sink": {
+									"name": "mid_geometry_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_4b']"
+								},
+								"sink": {
+									"name": "mid_geometry_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_total']"
+								},
+								"sink": {
+									"name": "mid_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_seq']"
+								},
+								"sink": {
+									"name": "mid1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_absent']"
+								},
+								"sink": {
+									"name": "mid1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_mutiple_choice']"
+								},
+								"sink": {
+									"name": "mid1_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_3']"
+								},
+								"sink": {
+									"name": "mid1_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_4a']"
+								},
+								"sink": {
+									"name": "mid1_geometry_4a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_4b']"
+								},
+								"sink": {
+									"name": "mid1_geometry_4b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_total']"
+								},
+								"sink": {
+									"name": "mid1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_seq']"
+								},
+								"sink": {
+									"name": "fin_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_absent']"
+								},
+								"sink": {
+									"name": "fin_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_mutiple_choice']"
+								},
+								"sink": {
+									"name": "fin_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1']"
+								},
+								"sink": {
+									"name": "fin_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3a']"
+								},
+								"sink": {
+									"name": "fin_algebra_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3b']"
+								},
+								"sink": {
+									"name": "fin_algebra_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_4']"
+								},
+								"sink": {
+									"name": "fin_geometry_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_6a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_6b']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_6b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_total']"
+								},
+								"sink": {
+									"name": "fin_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_seq']"
+								},
+								"sink": {
+									"name": "fin1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_absent']"
+								},
+								"sink": {
+									"name": "fin1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_mutiple_choice']"
+								},
+								"sink": {
+									"name": "fin1_mutiple_choice",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_4']"
+								},
+								"sink": {
+									"name": "fin1_geometry_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_6a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_6b']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_6b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_total']"
+								},
+								"sink": {
+									"name": "fin1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_K12_Math8",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_K12_MATH8"
+						}
+					}
+				]
+			},
+			{
+				"name": "LOAD API Math 9",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "LOAD API Math 8",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_seq']"
+								},
+								"sink": {
+									"name": "ability_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_absent']"
+								},
+								"sink": {
+									"name": "ability_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_total']"
+								},
+								"sink": {
+									"name": "ability_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_seq']"
+								},
+								"sink": {
+									"name": "quiz_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_absent']"
+								},
+								"sink": {
+									"name": "quiz_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_total']"
+								},
+								"sink": {
+									"name": "quiz_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_seq']"
+								},
+								"sink": {
+									"name": "quiz1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_total']"
+								},
+								"sink": {
+									"name": "quiz1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_seq']"
+								},
+								"sink": {
+									"name": "quiz2_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_total']"
+								},
+								"sink": {
+									"name": "quiz2_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_seq']"
+								},
+								"sink": {
+									"name": "quiz3_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_absent']"
+								},
+								"sink": {
+									"name": "quiz3_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_total']"
+								},
+								"sink": {
+									"name": "quiz3_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_seq']"
+								},
+								"sink": {
+									"name": "mid_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_absent']"
+								},
+								"sink": {
+									"name": "mid_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1a']"
+								},
+								"sink": {
+									"name": "mid_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1b']"
+								},
+								"sink": {
+									"name": "mid_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2']"
+								},
+								"sink": {
+									"name": "mid_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_3']"
+								},
+								"sink": {
+									"name": "mid_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_4']"
+								},
+								"sink": {
+									"name": "mid_geometry_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5a']"
+								},
+								"sink": {
+									"name": "mid_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5b']"
+								},
+								"sink": {
+									"name": "mid_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5c']"
+								},
+								"sink": {
+									"name": "mid_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_total']"
+								},
+								"sink": {
+									"name": "mid_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_seq']"
+								},
+								"sink": {
+									"name": "mid1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_absent']"
+								},
+								"sink": {
+									"name": "mid1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_3']"
+								},
+								"sink": {
+									"name": "mid1_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_4']"
+								},
+								"sink": {
+									"name": "mid1_geometry_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5a']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5b']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5c']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_total']"
+								},
+								"sink": {
+									"name": "mid1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_seq']"
+								},
+								"sink": {
+									"name": "fin_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_absent']"
+								},
+								"sink": {
+									"name": "fin_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1a']"
+								},
+								"sink": {
+									"name": "fin_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1b']"
+								},
+								"sink": {
+									"name": "fin_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1c']"
+								},
+								"sink": {
+									"name": "fin_algebra_1c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2']"
+								},
+								"sink": {
+									"name": "fin_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3']"
+								},
+								"sink": {
+									"name": "fin_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_4']"
+								},
+								"sink": {
+									"name": "fin_algebra_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5']"
+								},
+								"sink": {
+									"name": "fin_geometry_5",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_6a']"
+								},
+								"sink": {
+									"name": "fin_geometry_6a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_6b']"
+								},
+								"sink": {
+									"name": "fin_geometry_6b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_6c']"
+								},
+								"sink": {
+									"name": "fin_geometry_6c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_total']"
+								},
+								"sink": {
+									"name": "fin_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_seq']"
+								},
+								"sink": {
+									"name": "fin1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_absent']"
+								},
+								"sink": {
+									"name": "fin1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1c']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_4']"
+								},
+								"sink": {
+									"name": "fin1_algebra_4",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_6a']"
+								},
+								"sink": {
+									"name": "fin1_geometry_6a",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_6b']"
+								},
+								"sink": {
+									"name": "fin1_geometry_6b",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_6c']"
+								},
+								"sink": {
+									"name": "fin1_geometry_6c",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_total']"
+								},
+								"sink": {
+									"name": "fin1_total",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_K12_Math9",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_K12_MATH9"
+						}
+					}
+				]
+			},
+			{
+				"name": "LOAD API Math 10",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "LOAD API Math 9",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE [STG].[W_STUDENT_SCORE_K12_MATH10]",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_seq']"
+								},
+								"sink": {
+									"name": "ability_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_absent']"
+								},
+								"sink": {
+									"name": "ability_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_total']"
+								},
+								"sink": {
+									"name": "ability_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_seq']"
+								},
+								"sink": {
+									"name": "quiz_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_absent']"
+								},
+								"sink": {
+									"name": "quiz_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_total']"
+								},
+								"sink": {
+									"name": "quiz_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_seq']"
+								},
+								"sink": {
+									"name": "quiz1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_total']"
+								},
+								"sink": {
+									"name": "quiz1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_seq']"
+								},
+								"sink": {
+									"name": "quiz2_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_total']"
+								},
+								"sink": {
+									"name": "quiz2_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_seq']"
+								},
+								"sink": {
+									"name": "quiz3_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_absent']"
+								},
+								"sink": {
+									"name": "quiz3_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_total']"
+								},
+								"sink": {
+									"name": "quiz3_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_seq']"
+								},
+								"sink": {
+									"name": "mid_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_absent']"
+								},
+								"sink": {
+									"name": "mid_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1']"
+								},
+								"sink": {
+									"name": "mid_algebra_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2c']"
+								},
+								"sink": {
+									"name": "mid_algebra_2c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_3']"
+								},
+								"sink": {
+									"name": "mid_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_4']"
+								},
+								"sink": {
+									"name": "mid_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5a']"
+								},
+								"sink": {
+									"name": "mid_geometry_5a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5b']"
+								},
+								"sink": {
+									"name": "mid_geometry_5b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_6a']"
+								},
+								"sink": {
+									"name": "mid_geometry_6a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_6b']"
+								},
+								"sink": {
+									"name": "mid_geometry_6b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_total']"
+								},
+								"sink": {
+									"name": "mid_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_seq']"
+								},
+								"sink": {
+									"name": "mid1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_absent']"
+								},
+								"sink": {
+									"name": "mid1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2c']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_3']"
+								},
+								"sink": {
+									"name": "mid1_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_4']"
+								},
+								"sink": {
+									"name": "mid1_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5a']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5b']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_6a']"
+								},
+								"sink": {
+									"name": "mid1_geometry_6a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_6b']"
+								},
+								"sink": {
+									"name": "mid1_geometry_6b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_total']"
+								},
+								"sink": {
+									"name": "mid1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_seq']"
+								},
+								"sink": {
+									"name": "fin_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_absent']"
+								},
+								"sink": {
+									"name": "fin_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1']"
+								},
+								"sink": {
+									"name": "fin_algebra_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2']"
+								},
+								"sink": {
+									"name": "fin_algebra_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3']"
+								},
+								"sink": {
+									"name": "fin_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_4']"
+								},
+								"sink": {
+									"name": "fin_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_5']"
+								},
+								"sink": {
+									"name": "fin_algebra_5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_6']"
+								},
+								"sink": {
+									"name": "fin_geometry_6",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_7']"
+								},
+								"sink": {
+									"name": "fin_geometry_7",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_8']"
+								},
+								"sink": {
+									"name": "fin_geometry_8",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_9']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_9",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_10']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_10",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_total']"
+								},
+								"sink": {
+									"name": "fin_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_seq']"
+								},
+								"sink": {
+									"name": "fin1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_absent']"
+								},
+								"sink": {
+									"name": "fin1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_4']"
+								},
+								"sink": {
+									"name": "fin1_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_5']"
+								},
+								"sink": {
+									"name": "fin1_algebra_5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_6']"
+								},
+								"sink": {
+									"name": "fin1_geometry_6",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_7']"
+								},
+								"sink": {
+									"name": "fin1_geometry_7",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_8']"
+								},
+								"sink": {
+									"name": "fin1_geometry_8",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_9']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_9",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_10']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_10",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_total']"
+								},
+								"sink": {
+									"name": "fin1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_K12_Math10",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_K12_MATH10"
+						}
+					}
+				]
+			},
+			{
+				"name": "LOAD API Math 11",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "LOAD API Math 10",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE [STG].[W_STUDENT_SCORE_K12_MATH11]",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_seq']"
+								},
+								"sink": {
+									"name": "ability_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_absent']"
+								},
+								"sink": {
+									"name": "ability_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_total']"
+								},
+								"sink": {
+									"name": "ability_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_seq']"
+								},
+								"sink": {
+									"name": "quiz_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_absent']"
+								},
+								"sink": {
+									"name": "quiz_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_total']"
+								},
+								"sink": {
+									"name": "quiz_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_seq']"
+								},
+								"sink": {
+									"name": "quiz1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz1_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz1_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_total']"
+								},
+								"sink": {
+									"name": "quiz1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_seq']"
+								},
+								"sink": {
+									"name": "quiz2_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz2_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz2_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_total']"
+								},
+								"sink": {
+									"name": "quiz2_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_seq']"
+								},
+								"sink": {
+									"name": "quiz3_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_absent']"
+								},
+								"sink": {
+									"name": "quiz3_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_1b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2a']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_algebra_2b']"
+								},
+								"sink": {
+									"name": "quiz3_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3a']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3b']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_geometry_3c']"
+								},
+								"sink": {
+									"name": "quiz3_geometry_3c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_total']"
+								},
+								"sink": {
+									"name": "quiz3_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_seq']"
+								},
+								"sink": {
+									"name": "mid_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_absent']"
+								},
+								"sink": {
+									"name": "mid_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1a']"
+								},
+								"sink": {
+									"name": "mid_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_1b']"
+								},
+								"sink": {
+									"name": "mid_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_3']"
+								},
+								"sink": {
+									"name": "mid_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_algebra_4']"
+								},
+								"sink": {
+									"name": "mid_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5a']"
+								},
+								"sink": {
+									"name": "mid_geometry_5a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5b']"
+								},
+								"sink": {
+									"name": "mid_geometry_5b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_geometry_5c']"
+								},
+								"sink": {
+									"name": "mid_geometry_5c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_total']"
+								},
+								"sink": {
+									"name": "mid_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_seq']"
+								},
+								"sink": {
+									"name": "mid1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_absent']"
+								},
+								"sink": {
+									"name": "mid1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_1b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2a']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_2b']"
+								},
+								"sink": {
+									"name": "mid1_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_3']"
+								},
+								"sink": {
+									"name": "mid1_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_algebra_4']"
+								},
+								"sink": {
+									"name": "mid1_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5a']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5b']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_geometry_5c']"
+								},
+								"sink": {
+									"name": "mid1_geometry_5c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_total']"
+								},
+								"sink": {
+									"name": "mid1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_seq']"
+								},
+								"sink": {
+									"name": "fin_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_absent']"
+								},
+								"sink": {
+									"name": "fin_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1a']"
+								},
+								"sink": {
+									"name": "fin_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_1b']"
+								},
+								"sink": {
+									"name": "fin_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_3']"
+								},
+								"sink": {
+									"name": "fin_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_algebra_4']"
+								},
+								"sink": {
+									"name": "fin_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin_geometry_5a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin_geometry_5b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin_geometry_5c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_6a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_probability_statistics_6b']"
+								},
+								"sink": {
+									"name": "fin_probability_statistics_6b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_total']"
+								},
+								"sink": {
+									"name": "fin_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_seq']"
+								},
+								"sink": {
+									"name": "fin1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_absent']"
+								},
+								"sink": {
+									"name": "fin1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_1b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_1b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2a']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_2b']"
+								},
+								"sink": {
+									"name": "fin1_algebra_2b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_3']"
+								},
+								"sink": {
+									"name": "fin1_algebra_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_algebra_4']"
+								},
+								"sink": {
+									"name": "fin1_algebra_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5a']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5b']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_geometry_5c']"
+								},
+								"sink": {
+									"name": "fin1_geometry_5c",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_6a']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_6a",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_probability_statistics_6b']"
+								},
+								"sink": {
+									"name": "fin1_probability_statistics_6b",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_total']"
+								},
+								"sink": {
+									"name": "fin1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_K12_Math11",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_K12_MATH11"
+						}
+					}
+				]
+			},
+			{
+				"name": "LOAD API Math 12",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "LOAD API Math 11",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"additionalColumns": [
+							{
+								"name": "insert_date",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.{offset}": "RANGE:0:200000:10000"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE [STG].[W_STUDENT_SCORE_K12_MATH12]",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['campus_code']"
+								},
+								"sink": {
+									"name": "campus_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['course_code']"
+								},
+								"sink": {
+									"name": "course_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['student_code']"
+								},
+								"sink": {
+									"name": "student_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_seq']"
+								},
+								"sink": {
+									"name": "ability_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_absent']"
+								},
+								"sink": {
+									"name": "ability_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ability_total']"
+								},
+								"sink": {
+									"name": "ability_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_seq']"
+								},
+								"sink": {
+									"name": "quiz_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_absent']"
+								},
+								"sink": {
+									"name": "quiz_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz_total']"
+								},
+								"sink": {
+									"name": "quiz_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_seq']"
+								},
+								"sink": {
+									"name": "quiz1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_absent']"
+								},
+								"sink": {
+									"name": "quiz1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz1_total']"
+								},
+								"sink": {
+									"name": "quiz1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_seq']"
+								},
+								"sink": {
+									"name": "quiz2_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_absent']"
+								},
+								"sink": {
+									"name": "quiz2_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz2_total']"
+								},
+								"sink": {
+									"name": "quiz2_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_seq']"
+								},
+								"sink": {
+									"name": "quiz3_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_absent']"
+								},
+								"sink": {
+									"name": "quiz3_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['quiz3_total']"
+								},
+								"sink": {
+									"name": "quiz3_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_seq']"
+								},
+								"sink": {
+									"name": "mid_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_absent']"
+								},
+								"sink": {
+									"name": "mid_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid_total']"
+								},
+								"sink": {
+									"name": "mid_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_seq']"
+								},
+								"sink": {
+									"name": "mid1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_absent']"
+								},
+								"sink": {
+									"name": "mid1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['mid1_total']"
+								},
+								"sink": {
+									"name": "mid1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_seq']"
+								},
+								"sink": {
+									"name": "fin_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_absent']"
+								},
+								"sink": {
+									"name": "fin_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin_total']"
+								},
+								"sink": {
+									"name": "fin_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_seq']"
+								},
+								"sink": {
+									"name": "fin1_seq",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_absent']"
+								},
+								"sink": {
+									"name": "fin1_absent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['fin1_total']"
+								},
+								"sink": {
+									"name": "fin1_total",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['created_on']"
+								},
+								"sink": {
+									"name": "created_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['modified_on']"
+								},
+								"sink": {
+									"name": "modified_on",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['limit']"
+								},
+								"sink": {
+									"name": "limit",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['offset']"
+								},
+								"sink": {
+									"name": "offset",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['count']"
+								},
+								"sink": {
+									"name": "count",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['insert_date']"
+								},
+								"sink": {
+									"name": "insert_date",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": "$['items']",
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Data_K12_Math12",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING2",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_STUDENT_SCORE_K12_MATH12"
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"Count": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "VUS API"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-15T02:52:51Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

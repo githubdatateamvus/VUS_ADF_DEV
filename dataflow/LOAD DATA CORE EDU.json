@@ -1,0 +1,57 @@
+{
+	"name": "LOAD DATA CORE EDU",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Core_Edu",
+						"type": "DatasetReference"
+					},
+					"name": "SourceCodeEdu"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_STAGING1",
+						"type": "DatasetReference"
+					},
+					"name": "OutputTest"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"parameters{",
+				"     JOB_SCRIPT as string,",
+				"     TARGET_TABLE2 as string,",
+				"     MAX_DATE as string,",
+				"     INTEGRATION_COL as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     query: (concat($JOB_SCRIPT,'<filter><condition attribute=\"modifiedon\" operator=\"ge\" value=\"',$MAX_DATE,'\" /></filter></entity></fetch>')),",
+				"     timeout: 300) ~> SourceCodeEdu",
+				"SourceCodeEdu sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     errorHandlingOption: 'allErrors',",
+				"     transactionCommit: 'single',",
+				"     reportSuccessOnError: false,",
+				"     manifestType: 'manifest',",
+				"     preCommands: [],",
+				"     postCommands: []) ~> OutputTest"
+			]
+		}
+	}
+}

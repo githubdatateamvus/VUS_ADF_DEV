@@ -1,0 +1,19 @@
+{
+	"name": "Core_Edu",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Core_Edu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DynamicsEntity",
+		"schema": [],
+		"typeProperties": {
+			"entityName": {
+				"value": "@pipeline().parameters.SRC_Table",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

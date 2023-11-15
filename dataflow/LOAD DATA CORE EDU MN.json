@@ -1,0 +1,51 @@
+{
+	"name": "LOAD DATA CORE EDU MN",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Core_Edu_Test",
+						"type": "DatasetReference"
+					},
+					"name": "SourceCodeEdu"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF_ANYSCHEMA",
+						"type": "DatasetReference"
+					},
+					"name": "OutputTest"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     query: (\"<fetch><entity name='contact'><attribute name='address1_composite' /><attribute name='hs_address_calculated' /><attribute name='address1_addressid' /><attribute name='address2_addressid' /><attribute name='address2_addresstypecode' /><attribute name='address2_shippingmethodcode' /><attribute name='birthdate' /><attribute name='contactid' /><attribute name='createdby' /><attribute name='createdon' /><attribute name='creditonhold' /><attribute name='customersizecode' /><attribute name='description' /><attribute name='educationcode' /><attribute name='firstname' /><attribute name='fullname' /><attribute name='gendercode' /><attribute name='governmentid' /><attribute name='haschildrencode' /><attribute name='hs_consultant_id' /><attribute name='hs_consultation_date' /><attribute name='hs_country_id' /><attribute name='hs_customer_code' /><attribute name='hs_district_id' /><attribute name='hs_emergency_contact_id' /><attribute name='hs_phone_call_id' /><attribute name='hs_province_id' /><attribute name='hs_ward_id' /><attribute name='importsequencenumber' /><attribute name='lastname' /><attribute name='leadsourcecode' /><attribute name='managername' /><attribute name='managerphone' /><attribute name='marketingonly' /><attribute name='masterid' /><attribute name='merged' /><attribute name='middlename' /><attribute name='mobilephone' /><attribute name='modifiedby' /><attribute name='modifiedon' /><attribute name='msa_managingpartnerid' /><attribute name='numberofchildren' /><attribute name='ownerid' /><attribute name='owningbusinessunit' /><attribute name='parentcustomerid' /><attribute name='paymenttermscode' /><attribute name='shippingmethodcode' /><attribute name='statecode' /><attribute name='statuscode' /><attribute name='telephone2' /><attribute name='transactioncurrencyid' /><attribute name='address1_line1' /><attribute name='address1_postofficebox' /><attribute name='address2_composite' /><attribute name='adx_identity_emailaddress1confirmed' /><attribute name='hs_age_fx' /><attribute name='hs_customer_code_2' /><attribute name='hs_debug_context' /><attribute name='hs_first_name_2' /><attribute name='hs_full_name_2' /><attribute name='hs_key_contact_phone' /><attribute name='hs_last_name_2' /><attribute name='hs_school_id' /><attribute name='hs_sys_full_name' /></entity></fetch>\"),",
+				"     timeout: 300) ~> SourceCodeEdu",
+				"SourceCodeEdu sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     errorHandlingOption: 'allErrors',",
+				"     transactionCommit: 'single',",
+				"     reportSuccessOnError: false,",
+				"     manifestType: 'manifest',",
+				"     preCommands: [],",
+				"     postCommands: []) ~> OutputTest"
+			]
+		}
+	}
+}

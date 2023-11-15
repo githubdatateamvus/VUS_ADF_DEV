@@ -1,0 +1,16 @@
+{
+	"name": "Data_EH_F",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "EH_F_RESTService_LMS",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SRC_API"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

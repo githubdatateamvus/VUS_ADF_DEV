@@ -1,0 +1,166 @@
+{
+	"name": "LOAD ASA MKT TARGET EXCEL",
+	"properties": {
+		"activities": [
+			{
+				"name": "LOAD ASA MKT TARGET EXCEL",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table STG.W_EXL_ASA_MKT_TARGET",
+						"writeBehavior": "Insert",
+						"sqlWriterUseTableLock": true,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DATE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DATE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CAMPUS",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CAMPUS",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TYPE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TYPE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CATEGORY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CATEGORY",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SUB_CATEGORY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SUB_CATEGORY",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LEAD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LEAD",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHOW",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHOW",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SIGN",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SIGN",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ASA_MKT_Target",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "W_EXL_ASA_MKT_TARGET"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "VUS EXCEL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-01T14:34:40Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

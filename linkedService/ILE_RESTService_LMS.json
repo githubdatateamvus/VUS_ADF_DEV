@@ -1,0 +1,15 @@
+{
+	"name": "ILE_RESTService_LMS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://lxp.vus.edu.vn/ords/connect/mis/gradebook_ile?offset={offset}",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Basic",
+			"userName": "connect_user",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDExQjEwRTJDLTA5QTMtNDk0RC1CQjE5LTE3NzdFQUJGREYzMF80NzNkOTUzOC1jNmU4LTRjOTMtOTUwMC04MzBjNmNmMThhYzIiDQp9"
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "Data_K12_Math9",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "K12_Math9_RESTServices_LMS",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SRC_API"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,106 @@
+{
+	"name": "LOAD STUDENT SCORE LMS",
+	"properties": {
+		"activities": [
+			{
+				"name": "Load API_SK",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LOAD API SK",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load API_YL",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load API_SK",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LOAD API YL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load API_ILX",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load API_YL",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LOAD API ILX",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load API_ILE",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load API_ILX",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LOAD API ILE",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load API_EH",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load API_ILE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LOAD API EH",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "VUS API"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-14T10:44:54Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

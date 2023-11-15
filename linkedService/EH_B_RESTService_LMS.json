@@ -1,0 +1,19 @@
+{
+	"name": "EH_B_RESTService_LMS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://vhub.vus.edu.vn/ords/connect/mis/gradebook_eh_b",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Basic",
+			"userName": "connect_user",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5MWZlMTQ0Ni02NTliLTQ1ODAtYjY0ZC00YzRiYzJhYTcxNTIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IR-PROD",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,0 +1,48 @@
+{
+	"name": "RLSConfig_CSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_STORAGE_ACCOUNT_DEV",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SRC_EXCEL"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "RLS.csv",
+				"container": "manual"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "User_ID",
+				"type": "String"
+			},
+			{
+				"name": "User_Name",
+				"type": "String"
+			},
+			{
+				"name": "Dimension_Name",
+				"type": "String"
+			},
+			{
+				"name": "Field_Name",
+				"type": "String"
+			},
+			{
+				"name": "Field_Value",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

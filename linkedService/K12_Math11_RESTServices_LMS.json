@@ -1,0 +1,15 @@
+{
+	"name": "K12_Math11_RESTServices_LMS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://vhub.vus.edu.vn/ords/connect/mis/gradebook_math_11?offset={offset}",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Basic",
+			"userName": "connect_user",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDExQjEwRTJDLTA5QTMtNDk0RC1CQjE5LTE3NzdFQUJGREYzMF8zNzc2MGE1Yy1hNDRjLTQzZTEtODJlYS04NjM3YjNjNTBhNWMiDQp9"
+		}
+	}
+}

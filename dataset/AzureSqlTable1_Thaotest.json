@@ -1,0 +1,64 @@
+{
+	"name": "AzureSqlTable1_Thaotest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1_Thaotest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TABLE_NAME": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DateKey",
+				"type": "varchar"
+			},
+			{
+				"name": "DateNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CampusKey",
+				"type": "varchar"
+			},
+			{
+				"name": "CampusCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Area",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Media",
+				"type": "nvarchar"
+			},
+			{
+				"name": "KPI",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "KpiType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GroupProgramCode",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "FND",
+			"table": {
+				"value": "@dataset().TABLE_NAME",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

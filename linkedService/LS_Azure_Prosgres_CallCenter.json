@@ -1,0 +1,16 @@
+{
+	"name": "LS_Azure_Prosgres_CallCenter",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzurePostgreSql",
+		"typeProperties": {
+			"connectionString": "host=callcentre-postgresql.postgres.database.azure.com;port=5432;database=callcentre;uid=VUS;encryptionmethod=1;validateservercertificate=1",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwNjM4YmVkOS02NGRiLTRkNjMtYTk5MC0wMjM3MmE2ZTEzNzAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IR-PROD",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

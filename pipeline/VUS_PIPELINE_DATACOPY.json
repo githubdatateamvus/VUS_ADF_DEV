@@ -1,0 +1,398 @@
+{
+	"name": "VUS_PIPELINE_DATACOPY",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get JOB_ID",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": {
+							"value": "@concat('select JOB_ID from [ADF].[ETL_JOB] where TARGET_TABLE=''',pipeline().parameters.TGT_Table,'''')",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": {
+								"value": "@pipeline().parameters.TGT_Table",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			},
+			{
+				"name": "Insert Log Before Load Data",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Get JOB_ID",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[ADF].[proc_etl_log_message]",
+					"storedProcedureParameters": {
+						"p_batch_id": {
+							"value": {
+								"value": "@pipeline().parameters.BATCH_ID",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						},
+						"p_error_code": {
+							"value": "",
+							"type": "String"
+						},
+						"p_error_message": {
+							"value": "",
+							"type": "String"
+						},
+						"p_job_id": {
+							"value": {
+								"value": "@activity('Get JOB_ID').output.firstRow.JOB_ID",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						},
+						"p_log_message": {
+							"value": {
+								"value": "@concat('Start load table ',pipeline().parameters.TGT_Table)",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"p_log_status": {
+							"value": "",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_DWH_SYNAPSE_DEV",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Insert Log Load Finish Data",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[ADF].[proc_etl_log_message]",
+					"storedProcedureParameters": {
+						"p_batch_id": {
+							"value": {
+								"value": "@pipeline().parameters.BATCH_ID",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						},
+						"p_error_code": {
+							"value": "",
+							"type": "String"
+						},
+						"p_error_message": {
+							"value": "",
+							"type": "String"
+						},
+						"p_job_id": {
+							"value": {
+								"value": "@activity('Get JOB_ID').output.firstRow.JOB_ID",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						},
+						"p_log_message": {
+							"value": {
+								"value": "@concat('Finished load table ',pipeline().parameters.TGT_Table)",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"p_log_status": {
+							"value": "",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_DWH_SYNAPSE_DEV",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Insert Log Load Fail Data",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[ADF].[proc_etl_log_message]",
+					"storedProcedureParameters": {
+						"p_batch_id": {
+							"value": {
+								"value": "@pipeline().parameters.BATCH_ID",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						},
+						"p_error_code": {
+							"value": "",
+							"type": "String"
+						},
+						"p_error_message": {
+							"value": "",
+							"type": "String"
+						},
+						"p_job_id": {
+							"value": {
+								"value": "@activity('Get JOB_ID').output.firstRow.JOB_ID",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						},
+						"p_log_message": {
+							"value": {
+								"value": "@concat('Load fail table ',pipeline().parameters.TGT_Table)",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"p_log_status": {
+							"value": "",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_DWH_SYNAPSE_DEV",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "SEND ERROR MESSAGE",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Get JOB_ID",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Insert Log Before Load Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Insert Log Load Finish Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Insert Log Load Fail Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Get Max Date",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SEND ERROR EMAIL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Get Max Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": {
+							"value": "@concat('SELECT ISNULL(dt.modifiedon,''1900-01-01'') as modifiedon from ( SELECT max(cast(LEFT(modifiedon,19) as datetime)) as modifiedon FROM FND.',pipeline().parameters.TGT_Table,' ) as dt')",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": {
+								"value": "@pipeline().parameters.TGT_Table",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Insert Log Before Load Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Get Max Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DynamicsSource",
+						"query": {
+							"value": "@concat(pipeline().parameters.Source_Script,'<filter><condition attribute=\"modifiedon\" operator=\"ge\" value=\"',activity('Get Max Date').output.firstRow.modifiedon,'\" /></filter></entity></fetch>')",
+							"type": "Expression"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowCopyCommand": true
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "LS_STORAGE_ACCOUNT_PROD",
+							"type": "LinkedServiceReference"
+						},
+						"path": "model/LeadFolder"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Core_Edu",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DWH_SYNAPSE_STAGING1",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "@pipeline().parameters.TGT_Table"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"TGT_Table": {
+				"type": "string",
+				"defaultValue": "'AAA'"
+			},
+			"Source_Script": {
+				"type": "string",
+				"defaultValue": "'AAA'"
+			},
+			"SRC_Table": {
+				"type": "string"
+			},
+			"SRC_Schema": {
+				"type": "string"
+			},
+			"BATCH_ID": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "VUS_COMMONS"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-13T07:53:47Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
